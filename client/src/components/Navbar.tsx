@@ -1,8 +1,8 @@
+import { FlexBetween } from "@/components/FlexBetween";
+import { TabLink } from "@/components/TabLink";
 import PixIcon from "@mui/icons-material/Pix";
 import { Typography, useTheme } from "@mui/material";
 import { useState } from "react";
-import { FlexBetween } from "./FlexBetween";
-import { TabLink } from "./TabLink";
 
 interface NavbarProps {}
 
