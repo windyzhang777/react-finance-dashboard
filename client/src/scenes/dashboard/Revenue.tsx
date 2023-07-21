@@ -28,7 +28,7 @@ export const Revenue = (props: RevenueProps) => {
   const revenues = useMemo(
     () =>
       kpisJSON?.[0].monthlyData?.map(({ month, revenue, expenses }) => ({
-        month: month.slice(0, 3),
+        month: month.charAt(0).toUpperCase() + month.slice(1, 3),
         revenue: revenue,
         expenses: expenses,
       })),
