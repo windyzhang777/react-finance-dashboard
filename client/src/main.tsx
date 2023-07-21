@@ -1,4 +1,4 @@
-import App from "@/App.tsx";
+import App from "@/App";
 import "@/index.css";
 import { api } from "@/state/api";
 import { configureStore } from "@reduxjs/toolkit";
