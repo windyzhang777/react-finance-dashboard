@@ -1,4 +1,4 @@
-export interface Kpis {
+export interface Kpi {
   _id: string;
   totalProfit: number;
   totalRevenue: number;
