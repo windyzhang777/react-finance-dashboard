@@ -63,7 +63,7 @@ export const themeSettings = {
       ...allColors.grey,
       main: allColors.grey[500],
     },
-    background: {
+    moreBackground: {
       default: allColors.background.main,
       light: allColors.background.light,
     },
