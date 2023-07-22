@@ -1,8 +1,9 @@
-import { Box, Typography, useTheme } from "@mui/material";
 import { FlexBetween } from "@/components/FlexBetween";
+import { Box, Typography, useTheme } from "@mui/material";
+import { ReactNode } from "react";
 
 interface BoxHeaderProps {
-  icon?: string;
+  icon?: ReactNode;
   heading: string;
   desc: string;
   stat: string;

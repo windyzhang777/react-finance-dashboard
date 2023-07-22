@@ -1,11 +1,11 @@
 import { BoxHeader } from "@/components/BoxHeader";
 import { DashboardBox } from "@/components/DashboardBox";
 import { useGetKpisQuery } from "@/state/api";
+import { useTheme } from "@mui/material";
 import { useMemo } from "react";
 import {
   Area,
   AreaChart,
-  CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -21,11 +21,13 @@ const MOCK = {
 };
 
 export const Revenue = (props: RevenueProps) => {
+  const { palette } = useTheme();
   const { data } = useGetKpisQuery();
 
   const revenues = useMemo(
     () =>
-      data?.[0].monthlyData?.map(({ month, revenue, expenses }) => ({
+      data &&
+      data[0].monthlyData?.map(({ month, revenue, expenses }) => ({
         month: month.charAt(0).toUpperCase() + month.slice(1, 3),
         revenue: revenue,
         expenses: expenses,
@@ -48,15 +50,63 @@ export const Revenue = (props: RevenueProps) => {
             bottom: 60,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
+          {/* fading gradient area color by id */}
+          <defs>
+            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+              <stop
+                offset="5%"
+                stopColor={palette.primary[300]}
+                stopOpacity={0.5}
+              />
+              <stop
+                offset="95%"
+                stopColor={palette.primary[300]}
+                stopOpacity={0}
+              />
+            </linearGradient>
+            <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
+              <stop
+                offset="5%"
+                stopColor={palette.primary[300]}
+                stopOpacity={0.5}
+              />
+              <stop
+                offset="95%"
+                stopColor={palette.primary[300]}
+                stopOpacity={0}
+              />
+            </linearGradient>
+          </defs>
+
+          {/* background grid */}
+          {/* <CartesianGrid strokeDasharray="3 3" /> */}
+          <XAxis
+            dataKey="month"
+            tickLine={false} // tick on axis
+            style={{ fontSize: "10px" }}
+          />
+          <YAxis
+            axisLine={{ strokeWidth: "0" }} // axis line
+            tickLine={false} // tick on axis
+            style={{ fontSize: "10px" }}
+            domain={[10000, 23000]}
+          />
           <Tooltip />
           <Area
             type="monotone"
             dataKey="revenue"
-            stroke="#8884d8"
-            fill="#8884d8"
+            dot={true}
+            stroke={palette.primary.main} // area top line
+            // fillOpacity={1}
+            fill="url(#colorRevenue)"
+          />
+          <Area
+            type="monotone"
+            dataKey="expenses"
+            dot={true}
+            stroke={palette.primary.main}
+            fillOpacity={1}
+            fill="url(#colorExpenses)"
           />
         </AreaChart>
       </ResponsiveContainer>
