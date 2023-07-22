@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 interface BoxHeaderProps {
   icon?: ReactNode;
   heading: string;
-  desc: string;
+  desc?: string;
   stat: string;
 }
 
