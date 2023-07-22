@@ -1,6 +1,5 @@
 import { BoxHeader } from "@/components/BoxHeader";
 import { DashboardBox } from "@/components/DashboardBox";
-import kpisJSON from "@/mock/kpis.json";
 import { useGetKpisQuery } from "@/state/api";
 import { useMemo } from "react";
 import {
@@ -24,15 +23,14 @@ const MOCK = {
 export const Revenue = (props: RevenueProps) => {
   const { data } = useGetKpisQuery();
 
-  console.log(`data :`, data || kpisJSON);
   const revenues = useMemo(
     () =>
-      kpisJSON?.[0].monthlyData?.map(({ month, revenue, expenses }) => ({
+      data?.[0].monthlyData?.map(({ month, revenue, expenses }) => ({
         month: month.charAt(0).toUpperCase() + month.slice(1, 3),
         revenue: revenue,
         expenses: expenses,
       })),
-    []
+    [data]
   );
 
   return (
@@ -44,9 +42,9 @@ export const Revenue = (props: RevenueProps) => {
           height={400}
           data={revenues}
           margin={{
-            top: 15,
-            right: 25,
-            left: -10,
+            top: 20,
+            right: 30,
+            left: 10,
             bottom: 60,
           }}
         >

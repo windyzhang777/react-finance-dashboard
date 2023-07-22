@@ -3,10 +3,10 @@ import { Kpi } from "../model/kpi";
 
 export const api = createApi({
   reducerPath: "main",
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.BASE_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL }),
   tagTypes: ["Kpis"],
   endpoints: (builder) => ({
-    getKpis: builder.query<Kpi[], void>({
+    getKpis: builder.query<Array<Kpi>, void>({
       query: () => "kpi/kpis/",
       providesTags: ["Kpis"],
     }),
