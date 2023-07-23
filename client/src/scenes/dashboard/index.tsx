@@ -1,5 +1,6 @@
 import { DashboardBox } from "@/components/DashboardBox";
 import { Box, useMediaQuery } from "@mui/material";
+import { Product } from "./Product";
 import { Revenue } from "./Revenue";
 
 interface DashboardProps {}
@@ -73,11 +74,7 @@ export const Dashboard = (props: DashboardProps) => {
       }
     >
       <Revenue />
-      <DashboardBox bgcolor={"#fff"}></DashboardBox>
-      <DashboardBox bgcolor={"#fff"}></DashboardBox>
-      <DashboardBox bgcolor={"#fff"}></DashboardBox>
-      <DashboardBox bgcolor={"#fff"}></DashboardBox>
-      <DashboardBox bgcolor={"#fff"}></DashboardBox>
+      <Product />
       <DashboardBox bgcolor={"#fff"}></DashboardBox>
       <DashboardBox bgcolor={"#fff"}></DashboardBox>
       <DashboardBox bgcolor={"#fff"}></DashboardBox>
