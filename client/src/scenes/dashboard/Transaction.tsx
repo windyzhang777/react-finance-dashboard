@@ -1,6 +1,9 @@
 import { BoxHeader } from "@/components/BoxHeader";
 import { DashboardBox } from "@/components/DashboardBox";
 import { FlexBetween } from "@/components/FlexBetween";
+import kpiJSON from "@/mock/kpi.json";
+import productJSON from "@/mock/product.json";
+import transactionJSON from "@/mock/transaction.json";
 import {
   useGetKpisQuery,
   useGetProductsQuery,
@@ -8,22 +11,24 @@ import {
 } from "@/state/api";
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Cell, Pie, PieChart } from "recharts";
 
-interface TransactionProps {}
-
-export const Transaction = (props: TransactionProps) => {
+export const Transaction = () => {
   const { palette } = useTheme();
   const { data: kpiData } = useGetKpisQuery();
   const { data: productData } = useGetProductsQuery();
   const { data: transactionData } = useGetTransactionsQuery();
 
+  useEffect(() => {
+    console.log(`loaded`);
+  }, [kpiData, productData, transactionData]);
+
   const MOCK = {
     products: { heading: "List of Products", stat: "124 products" },
     recentOrders: {
       heading: "Recent Orders",
-      stat: `${transactionData?.length} latest transactions`,
+      stat: `${transactionJSON?.length} latest transactions`,
     },
     expenseBreakdown: { heading: "Expense Breakdown By Category", stat: "+5%" },
     overallSummary: { heading: "Overall Summary", stat: "+10%" },
@@ -76,14 +81,14 @@ export const Transaction = (props: TransactionProps) => {
   ];
 
   const pieData = useMemo(() => {
-    if (kpiData) {
-      const totalExpenses = kpiData[0].totalExpenses;
-      return Object.entries(kpiData[0].expensesByCategory).map(([k, v]) => [
+    if (kpiJSON) {
+      const totalExpenses = kpiJSON[0].totalExpenses;
+      return Object.entries(kpiJSON[0].expensesByCategory).map(([k, v]) => [
         { name: k, value: v },
         { name: `net ${k}`, value: totalExpenses - v },
       ]);
     }
-  }, [kpiData]);
+  }, []);
 
   return (
     <>
@@ -114,7 +119,7 @@ export const Transaction = (props: TransactionProps) => {
             columnHeaderHeight={25}
             rowHeight={35}
             hideFooter={true} // hide page and rowsPerPage
-            rows={productData || []}
+            rows={productJSON || []}
             columns={productColumns}
           />
         </Box>
@@ -150,7 +155,7 @@ export const Transaction = (props: TransactionProps) => {
             columnHeaderHeight={25}
             rowHeight={35}
             hideFooter={true}
-            rows={transactionData || []}
+            rows={transactionJSON || []}
             columns={transactionColumns}
           />
         </Box>

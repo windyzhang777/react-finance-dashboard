@@ -1,9 +1,11 @@
 import { BoxHeader } from "@/components/BoxHeader";
 import { DashboardBox } from "@/components/DashboardBox";
 import { FlexBetween } from "@/components/FlexBetween";
+import kpiJSON from "@/mock/kpi.json";
+import productJSON from "@/mock/product.json";
 import { useGetKpisQuery, useGetProductsQuery } from "@/state/api";
 import { Box, Typography, useTheme } from "@mui/material";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   CartesianGrid,
   Cell,
@@ -20,8 +22,6 @@ import {
   YAxis,
   ZAxis,
 } from "recharts";
-
-interface ProductProps {}
 
 const MOCK = {
   operationalExpenses: {
@@ -51,33 +51,37 @@ const pieData = [
   { name: "Group B", value: 400 },
 ];
 
-export const Product = (props: ProductProps) => {
+export const Product = () => {
   const { palette } = useTheme();
   const { data: kpiData } = useGetKpisQuery();
   const { data: productData } = useGetProductsQuery();
 
+  useEffect(() => {
+    console.log(`loaded`);
+  }, [kpiData, productData]);
+
   const operationalExpenses = useMemo(
     () =>
-      kpiData &&
-      kpiData[0].monthlyData.map(
+      kpiJSON &&
+      kpiJSON[0].monthlyData.map(
         ({ month, operationalExpenses, nonOperationalExpenses }) => ({
           month: month.charAt(0).toUpperCase() + month.slice(1, 3),
           "Operational Expenses": operationalExpenses,
           "Non-Operational Expenses": nonOperationalExpenses,
         })
       ),
-    [kpiData]
+    []
   );
 
   const productExpenses = useMemo(
     () =>
-      productData &&
-      productData.map(({ _id, price, expense }) => ({
+      productJSON &&
+      productJSON.map(({ _id, price, expense }) => ({
         _id: _id,
         price: price,
         expense: expense,
       })),
-    [productData]
+    []
   );
 
   return (

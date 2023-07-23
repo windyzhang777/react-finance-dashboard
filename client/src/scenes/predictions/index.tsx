@@ -1,9 +1,10 @@
 import { BoxHeader } from "@/components/BoxHeader";
 import { DashboardBox } from "@/components/DashboardBox";
 import { FlexBetween } from "@/components/FlexBetween";
+import kpiJSON from "@/mock/kpi.json";
 import { useGetKpisQuery } from "@/state/api";
 import { Button, useTheme } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CartesianGrid,
   Label,
@@ -22,6 +23,10 @@ export default function Predictions({}) {
   const [isPrediction, setIsPrediction] = useState(false);
   const { data } = useGetKpisQuery();
 
+  useEffect(() => {
+    console.log(`loaded`);
+  }, [data]);
+
   const MOCK = {
     heading: "Revenue & Predictions",
     desc: "charted revenue and predicted revenue based on linear regression model",
@@ -29,8 +34,8 @@ export default function Predictions({}) {
   };
 
   const revenueData = useMemo(() => {
-    if (!data) return [];
-    const monthlyData = data && data[0].monthlyData;
+    if (!kpiJSON) return [];
+    const monthlyData = kpiJSON && kpiJSON[0].monthlyData;
     const dataPoint: DataPoint[] = monthlyData.map(
       ({ revenue }, index: number) => [index, revenue]
     );
@@ -41,7 +46,7 @@ export default function Predictions({}) {
       "Regression Line": regressionLine.points[index][1],
       "Predicted Revenue": regressionLine.predict(index + 12)[1],
     }));
-  }, [data]);
+  }, []);
 
   return (
     <DashboardBox width="100%" height="100%" p="1rem" overflow="hidden">

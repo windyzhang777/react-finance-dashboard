@@ -1,8 +1,9 @@
 import { BoxHeader } from "@/components/BoxHeader";
 import { DashboardBox } from "@/components/DashboardBox";
+import kpiJSON from "@/mock/kpi.json";
 import { useGetKpisQuery } from "@/state/api";
 import { useTheme } from "@mui/material";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   Area,
   AreaChart,
@@ -17,8 +18,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
-interface RevenueProps {}
 
 const MOCK = {
   revenueExpenses: {
@@ -36,40 +35,44 @@ const MOCK = {
   },
 };
 
-export const Revenue = (props: RevenueProps) => {
+export const Revenue = () => {
   const { palette } = useTheme();
   const { data } = useGetKpisQuery();
 
+  useEffect(() => {
+    console.log(`loaded`);
+  }, [data]);
+
   const revenueExpenses = useMemo(
     () =>
-      data &&
-      data[0].monthlyData?.map(({ month, revenue, expenses }) => ({
+      kpiJSON &&
+      kpiJSON[0].monthlyData?.map(({ month, revenue, expenses }) => ({
         month: month.charAt(0).toUpperCase() + month.slice(1, 3),
         revenue: revenue,
         expenses: expenses,
       })),
-    [data]
+    []
   );
 
   const revenueProfit = useMemo(
     () =>
-      data &&
-      data[0].monthlyData?.map(({ month, revenue, expenses }) => ({
+      kpiJSON &&
+      kpiJSON[0].monthlyData?.map(({ month, revenue, expenses }) => ({
         month: month.charAt(0).toUpperCase() + month.slice(1, 3),
         revenue: revenue,
         profit: (revenue - expenses).toFixed(2),
       })),
-    [data]
+    []
   );
 
   const revenueByMonth = useMemo(
     () =>
-      data &&
-      data[0].monthlyData?.map(({ month, revenue }) => ({
+      kpiJSON &&
+      kpiJSON[0].monthlyData?.map(({ month, revenue }) => ({
         month: month.charAt(0).toUpperCase() + month.slice(1, 3),
         revenue: revenue,
       })),
-    [data]
+    []
   );
 
   return (

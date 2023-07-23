@@ -3,8 +3,6 @@ import { Product } from "./Product";
 import { Revenue } from "./Revenue";
 import { Transaction } from "./Transaction";
 
-interface DashboardProps {}
-
 const gridTemplateLargeScreens = `
   "a b c"
   "a b c"
@@ -50,7 +48,7 @@ const gridTemplateSmallScreens = `
   "j"
 `;
 
-export const Dashboard = (props: DashboardProps) => {
+export const Dashboard = () => {
   const isLargeScreen = useMediaQuery("(min-width: 1200px)");
 
   return (

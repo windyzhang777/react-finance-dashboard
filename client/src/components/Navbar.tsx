@@ -4,9 +4,7 @@ import PixIcon from "@mui/icons-material/Pix";
 import { Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 
-interface NavbarProps {}
-
-export const Navbar = (props: NavbarProps) => {
+export const Navbar = () => {
   const { palette } = useTheme();
   const [selected, setSelected] = useState("dashboard");
 
