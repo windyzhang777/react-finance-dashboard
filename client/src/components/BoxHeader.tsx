@@ -6,7 +6,7 @@ interface BoxHeaderProps {
   icon?: ReactNode;
   heading: string;
   desc?: string;
-  stat: string;
+  stat?: string;
 }
 
 export const BoxHeader = ({ icon, heading, desc, stat }: BoxHeaderProps) => {
